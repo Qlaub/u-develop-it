@@ -10,18 +10,22 @@ require('dotenv').config();
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
- // connect to database
- const db = mysql.createConnection(
-   {
-     host: 'localhost',
-     // mysql username
-     user: process.env.DB_USER,
-     // mysql pass
-     password: process.env.DB_PASSWORD,
-     database: process.env.DB_NAME
-   },
-   console.log('Connected to the election database.')
- );
+// connect to database
+const db = mysql.createConnection(
+  {
+    host: 'localhost',
+    // mysql username
+    user: process.env.DB_USER,
+    // mysql pass
+    password: process.env.DB_PASSWORD,
+    database: process.env.DB_NAME
+  },
+  console.log('Connected to the election database.')
+);
+
+db.query('SELECT * FROM candidates', (err, rows) => {
+  console.log(rows);
+});
 
 // default response for any other request (not found)
 // place at bottom of routes to avoid overwriting a valid route
